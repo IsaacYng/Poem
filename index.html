@@ -4,84 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poetry Collection | YNG</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
+        .poem-card:hover { transform: translateY(-2px); transition: all 0.3s ease; }
     </style>
 </head>
-<body class="bg-white text-gray-900 leading-relaxed">
+<body class="bg-[#fafafa] text-gray-900 leading-relaxed">
 
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-sm font-black tracking-widest uppercase border-b-2 border-black">MY-PORTFOLIO</div>
-            <div class="flex gap-6 items-center">
-                <a href="https://yonghangishak.com.np" target="_blank" title="My Portfolio" class="text-gray-400 hover:text-black transition-colors text-xl">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-
-                <a href="https://www.facebook.com/yonghangisaac" target="_blank" class="text-gray-400 hover:text-blue-600 transition-colors">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-
-                <a href="https://wa.me/9779820907795" target="_blank" class="text-gray-400 hover:text-green-500 transition-colors">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-
-                <a href="mailto:yonghangissac@gmail.com" class="text-gray-400 hover:text-red-500 transition-colors">
-                    <i class="fas fa-envelope"></i>
-                </a>
+    <nav class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-sm font-bold tracking-tighter uppercase">YNG <span class="font-light text-gray-400">| POETRY</span></div>
+            <div class="flex gap-5 items-center">
+                <a href="https://yonghangishak.com.np" class="text-gray-500 hover:text-black transition-colors"><i class="fas fa-home"></i></a>
+                <a href="https://wa.me/9779820907795" class="text-gray-500 hover:text-green-600"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:yonghangissac@gmail.com" class="text-gray-500 hover:text-red-500"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </nav>
 
-    <header class="max-w-3xl mx-auto px-6 pt-20 pb-12 text-center">
-        <h2 class="text-4xl md:text-5xl font-light serif italic mb-4">The Quiet Collection</h2>
-        <p class="text-gray-500 font-light tracking-wide uppercase text-xs">A gathering of thoughts and rhythm</p>
+    <header class="max-w-3xl mx-auto px-6 pt-24 pb-16 text-center">
+        <h1 class="text-5xl md:text-6xl font-light serif italic mb-6">The Quiet Collection</h1>
+        <div class="h-1 w-12 bg-black mx-auto mb-6"></div>
+        <p class="text-gray-500 font-light tracking-widest uppercase text-[10px]">A sanctuary of rhythm and verse</p>
     </header>
 
     <main class="max-w-5xl mx-auto px-6 pb-24">
-        <div class="grid md:grid-cols-2 gap-12">
+        <div class="grid md:grid-cols-2 gap-16">
 
-            <article class="group cursor-pointer">
-                <div class="border-l border-gray-200 pl-6 group-hover:border-black transition-colors">
-                    <h3 class="text-2xl serif mb-3">नजिर जिवन</h3>
-                    <div class="text-gray-700 serif italic whitespace-pre-line leading-relaxed">
+            <article class="poem-card group">
+                <div class="border-l-2 border-gray-100 pl-8 group-hover:border-black transition-all duration-500">
+                    <h3 class="text-2xl serif font-semibold mb-6">नजिर जिवन</h3>
+                    <div class="text-gray-700 serif italic text-xl whitespace-pre-line leading-loose">
                         समयको किनारमा उभिएर,
                         मैले आफ्नै छायाँलाई सोधें—
                         यात्रा कहाँ सकिन्छ?
                         जवाफमा बतासले भन्यो,
                         "हिँड्नु नै गन्तव्य हो।"
                     </div>
-                    <p class="mt-4 text-xs text-gray-400 font-mono italic">— Ishak Yonghang</p>
+                    <p class="mt-8 text-[10px] text-gray-400 font-mono uppercase tracking-widest">— Ishak Yonghang</p>
                 </div>
             </article>
 
-            <article class="group cursor-pointer">
-                <div class="border-l border-gray-200 pl-6 group-hover:border-black transition-colors">
-                    <h3 class="text-2xl serif mb-3">Echoes of Phidim</h3>
-                    <div class="text-gray-700 serif italic whitespace-pre-line leading-relaxed">
+            <article class="poem-card group">
+                <div class="border-l-2 border-gray-100 pl-8 group-hover:border-black transition-all duration-500">
+                    <h3 class="text-2xl serif font-semibold mb-6">Echoes of Phidim</h3>
+                    <div class="text-gray-700 serif italic text-xl whitespace-pre-line leading-loose">
                         Mountain mist crawls low,
                         Touching the roofs of the town.
                         Silent words find home,
                         In the space between the peaks,
                         Where the heart beats slow.
                     </div>
-                    <p class="mt-4 text-xs text-gray-400 font-mono italic">— YNG</p>
+                    <p class="mt-8 text-[10px] text-gray-400 font-mono uppercase tracking-widest">— YNG</p>
                 </div>
             </article>
 
         </div>
     </main>
 
-    <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-gray-100 text-center text-gray-400 text-sm">
-        <p>&copy; 2026 YNG. All rights reserved.</p>
+    <footer class="max-w-5xl mx-auto px-6 py-12 border-t border-gray-100 text-center">
+        <p class="text-gray-400 text-[10px] tracking-widest uppercase font-medium">&copy; 2026 YNG Portfolio. Crafted in Nepal.</p>
     </footer>
 
 </body>
