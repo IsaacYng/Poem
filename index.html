@@ -1,40 +1,897 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishak Yonghang | Poem Collection</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-          <link rel="icon" type="image/png" href="favicons.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ishak Yonghang को कविता संग्रह — भावनाको भाषामा लेखिएका शब्दहरू">
+<meta name="author" content="Ishak Yonghang">
+<meta property="og:title" content="Ishak Yonghang | कविता संग्रह">
+<meta property="og:description" content="भावनाको भाषामा लेखिएका शब्दहरू">
+<meta property="og:url" content="https://poem.yonghangishak.com.np">
+<title>Ishak Yonghang | कविता संग्रह</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ROOT
+============================================================ */
+:root {
+  --bg:      #faf7f2;
+  --bg2:     #ffffff;
+  --bg3:     #f3ede3;
+  --bg4:     #e8e0d2;
+  --paper:   #fdf9f4;
+  --paper2:  #f5efe4;
+  --text:    #1e1a14;
+  --text2:   #5c5044;
+  --muted:   #9c8e7c;
+  --gold:    #a06c20;
+  --gold-l:  #c9913a;
+  --gold-d:  #7a4e10;
+  --gold-glow: rgba(160,108,32,.1);
+  --border:  rgba(0,0,0,.07);
+  --border2: rgba(0,0,0,.12);
+  --sh1: 0 2px 8px rgba(0,0,0,.06);
+  --sh2: 0 8px 32px rgba(0,0,0,.1);
+  --sh3: 0 20px 60px rgba(0,0,0,.14);
+}
+
+*,*::before,*::after { box-sizing:border-box;margin:0;padding:0; }
+html { scroll-behavior:smooth;font-size:16px; }
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cormorant Garamond',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* Devanagari text override */
+[lang="ne"], .ne, .poem-body, .poem-title-ne {
+  font-family:'Noto Serif Devanagari',serif;
+}
+
+/* ============================================================
+   CURSOR
+============================================================ */
+#cur { width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .15s; }
+#ring { width:30px;height:30px;border:1px solid var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:.4;transition:all .3s cubic-bezier(.175,.885,.32,1.5); }
+
+/* ============================================================
+   BACKGROUND EFFECTS
+============================================================ */
+.grain {
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:.3;mix-blend-mode:multiply;
+}
+
+.ambient {
+  position:fixed;top:-20%;left:50%;transform:translateX(-50%);
+  width:800px;height:500px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(160,108,32,.07) 0%,transparent 70%);
+}
+
+.ambient2 {
+  position:fixed;bottom:0;right:0;
+  width:400px;height:400px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at bottom right,rgba(160,108,32,.05) 0%,transparent 70%);
+}
+
+/* ============================================================
+   NAV
+============================================================ */
+nav {
+  position:sticky;top:0;z-index:200;
+  padding:0 40px;height:60px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(250,247,242,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.1rem;font-weight:600;color:var(--gold);
+  text-decoration:none;letter-spacing:.04em;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-icon { font-size:.85rem;opacity:.7; }
+
+.nav-right { display:flex;align-items:center;gap:12px; }
+.nav-link {
+  font-family:'Fira Code',monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  padding:6px 12px;border-radius:6px;cursor:none;
+  transition:all .2s;
+}
+.nav-link:hover { color:var(--gold);background:var(--bg3); }
+
+.nav-count {
+  font-family:'Fira Code',monospace;font-size:.58rem;
+  color:var(--gold);letter-spacing:.1em;
+  border:1px solid rgba(201,145,58,.3);border-radius:20px;
+  padding:4px 12px;background:var(--gold-glow);
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero {
+  min-height:92vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:80px 20px 60px;
+  position:relative;z-index:2;
+}
+
+.hero-kicker {
+  font-family:'Fira Code',monospace;font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;
+}
+.hero-kicker::before,.hero-kicker::after {
+  content:'';flex:1;max-width:60px;height:1px;background:var(--border2);
+}
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,9vw,7.5rem);
+  font-weight:700;font-style:italic;
+  line-height:1;color:var(--text);
+  margin-bottom:14px;
+  background:linear-gradient(160deg,#2a221a 0%,var(--gold) 50%,#2a221a 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hero-subtitle {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:clamp(1.1rem,3vw,1.6rem);
+  color:var(--text2);font-weight:300;
+  margin-bottom:40px;letter-spacing:.02em;
+}
+
+.hero-desc {
+  max-width:520px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.15rem;color:var(--muted);line-height:1.9;
+  margin-bottom:48px;
+}
+
+.hero-cta {
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 30px;border-radius:50px;
+  background:transparent;border:1px solid rgba(201,145,58,.4);
+  color:var(--gold);font-family:'Fira Code',monospace;
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;cursor:none;
+  transition:all .3s;
+}
+.hero-cta:hover { background:var(--gold-glow);border-color:var(--gold);transform:translateY(-3px); }
+
+.hero-scroll {
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'Fira Code',monospace;font-size:.5rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);animation:float 3s ease-in-out infinite;
+}
+.hero-scroll-line { width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent); }
+
+@keyframes float { 0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-8px);} }
+
+/* ============================================================
+   SECTION
+============================================================ */
+.wrap { max-width:1100px;margin:0 auto;padding:0 40px;position:relative;z-index:2; }
+
+.sec-header {
+  display:flex;align-items:center;gap:20px;margin-bottom:60px;
+}
+.sec-header-line { flex:1;height:1px;background:var(--border); }
+.sec-header-label {
+  font-family:'Fira Code',monospace;font-size:.58rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+.sec-header-num {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--muted);font-size:.9rem;
+}
+
+/* ============================================================
+   FEATURED POEM
+============================================================ */
+#featured { padding:100px 0 80px;border-bottom:1px solid var(--border); }
+
+.featured-poem {
+  display:grid;grid-template-columns:1fr 1.1fr;gap:0;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:28px;
+  overflow:hidden;box-shadow:var(--sh3);
+}
+
+.featured-left {
+  padding:56px 48px;
+  background:linear-gradient(145deg,var(--bg3),var(--paper));
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.featured-left::before {
+  content:'"';
+  position:absolute;bottom:-60px;left:-10px;
+  font-family:'Cormorant Garamond',serif;font-size:18rem;
+  color:rgba(0,0,0,.04);line-height:1;pointer-events:none;
+}
+
+.featured-tag {
+  font-family:'Fira Code',monospace;font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:8px;margin-bottom:24px;
+}
+.featured-tag::before { content:'';width:20px;height:1px;background:var(--gold);opacity:.5; }
+
+.featured-title {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;color:var(--text);
+  line-height:1.15;margin-bottom:20px;
+}
+
+.featured-meta {
+  display:flex;flex-direction:column;gap:8px;
+  font-family:'Fira Code',monospace;font-size:.6rem;
+  letter-spacing:.1em;color:var(--muted);
+}
+
+.featured-divider { width:40px;height:1px;background:var(--border2);margin:24px 0; }
+
+.featured-about {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--text2);line-height:1.8;
+}
+
+.featured-right {
+  padding:56px 48px;
+  background:var(--bg);
+  position:relative;
+}
+
+.poem-text {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:1.05rem;line-height:2.2;
+  color:var(--text);font-weight:400;
+  white-space:pre-wrap;
+}
+
+.poem-text .stanza { margin-bottom:36px;display:block; }
+.poem-text .stanza:last-child { margin-bottom:0; }
+
+.poem-line {
+  display:block;
+  transition:color .2s;
+  padding:2px 0;
+}
+.poem-line:hover { color:var(--gold-l); }
+
+.poem-ornament {
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin:32px 0;opacity:.3;
+  font-family:'Cormorant Garamond',serif;font-size:.8rem;color:var(--gold);
+  letter-spacing:.3em;
+}
+
+/* ============================================================
+   POEMS GRID
+============================================================ */
+#poems { padding:80px 0 100px; }
+
+.poems-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;
+}
+
+.poem-card {
+  background:var(--bg2);border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;cursor:none;
+  transition:all .35s cubic-bezier(.175,.885,.32,1.275);
+  position:relative;
+}
+.poem-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.poem-card:hover { transform:translateY(-6px);box-shadow:var(--sh3);border-color:var(--border2); }
+.poem-card:hover::before { opacity:1; }
+
+.poem-card-inner { padding:32px; }
+
+.poem-card-num {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:4rem;font-weight:700;
+  color:rgba(201,145,58,.12);line-height:1;
+  position:absolute;top:20px;right:24px;
+}
+
+.poem-card-tag {
+  font-family:'Fira Code',monospace;font-size:.5rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:16px;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.poem-card-tag::before { content:'';width:12px;height:1px;background:var(--gold);opacity:.5; }
+
+.poem-card-title {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:1.4rem;font-weight:600;
+  color:var(--text);margin-bottom:18px;line-height:1.3;
+}
+
+.poem-card-preview {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:.82rem;color:var(--text2);
+  line-height:2;font-style:italic;
+  border-left:2px solid var(--border2);padding-left:14px;
+  margin-bottom:24px;
+}
+
+.poem-card-footer {
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:20px;border-top:1px solid var(--border);
+}
+
+.poem-card-read {
+  font-family:'Fira Code',monospace;font-size:.58rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:8px;
+  cursor:none;text-decoration:none;
+  transition:gap .2s;
+}
+.poem-card:hover .poem-card-read { gap:13px; }
+
+.poem-card-emotion {
+  font-size:.62rem;color:var(--muted);
+  font-family:'Fira Code',monospace;letter-spacing:.08em;
+}
+
+/* ============================================================
+   POEM MODAL (Full View)
+============================================================ */
+.modal-overlay {
+  position:fixed;inset:0;z-index:500;
+  background:rgba(30,26,20,.7);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.open { opacity:1;pointer-events:all; }
+
+.modal {
+  background:var(--bg2);border:1px solid var(--border2);border-radius:28px;
+  max-width:680px;width:100%;max-height:90vh;overflow-y:auto;
+  box-shadow:var(--sh3);
+  transform:translateY(30px) scale(.97);
+  transition:transform .35s cubic-bezier(.175,.885,.32,1.275);
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+}
+.modal-overlay.open .modal { transform:translateY(0) scale(1); }
+
+.modal-header {
+  position:sticky;top:0;z-index:10;
+  padding:28px 36px 0;background:var(--bg2);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+
+.modal-title {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:1.8rem;font-weight:700;color:var(--text);line-height:1.2;
+}
+
+.modal-close {
+  width:36px;height:36px;border-radius:10px;background:var(--bg3);
+  border:1px solid var(--border);color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;font-size:.8rem;transition:all .2s;flex-shrink:0;
+}
+.modal-close:hover { color:var(--gold);border-color:var(--gold); }
+
+.modal-body { padding:36px;padding-top:28px; }
+
+.modal-poem-text {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:1.08rem;line-height:2.4;
+  color:var(--text);white-space:pre-wrap;
+}
+.modal-poem-text .stanza { display:block;margin-bottom:36px; }
+.modal-poem-text .stanza:last-child { margin-bottom:0; }
+
+.modal-footer {
+  padding:24px 36px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-author {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:.95rem;color:var(--muted);
+}
+.modal-author strong { color:var(--gold); }
+
+/* ============================================================
+   ABOUT POET SECTION
+============================================================ */
+#about-poet {
+  padding:80px 0;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.about-poet-inner {
+  display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:center;
+}
+
+.about-poet-visual {
+  display:flex;flex-direction:column;align-items:center;gap:24px;
+}
+
+.poet-avatar-wrap {
+  width:200px;height:200px;border-radius:50%;position:relative;
+}
+.poet-avatar-ring {
+  position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(160,108,32,.3);animation:spin 20s linear infinite;
+}
+.poet-avatar-ring::before {
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:8px;height:8px;border-radius:50%;background:var(--gold);
+  margin-top:-4px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.poet-avatar {
+  width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top;
+  border:2px solid var(--border2);
+}
+
+.poet-avatar-placeholder {
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(145deg,var(--bg3),var(--bg4));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:3rem;color:var(--gold);border:2px solid var(--border2);
+}
+
+.poet-name-vertical {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:.95rem;color:var(--muted);letter-spacing:.2em;
+  writing-mode:vertical-rl;text-orientation:mixed;
+}
+
+.about-poet-text h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:700;font-style:italic;
+  color:var(--text);line-height:1.1;margin-bottom:20px;
+}
+.about-poet-text h2 em { color:var(--gold); }
+
+.about-poet-text p {
+  font-family:'Cormorant Garamond',serif;font-size:1.08rem;
+  color:var(--text2);line-height:2;font-style:italic;margin-bottom:24px;
+}
+
+.about-tags { display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px; }
+.about-tag {
+  padding:7px 16px;border-radius:20px;
+  border:1px solid var(--border2);
+  font-family:'Fira Code',monospace;font-size:.6rem;
+  letter-spacing:.08em;color:var(--text2);
+  background:var(--bg3);
+}
+
+.about-link {
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Fira Code',monospace;font-size:.62rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;
+  border-bottom:1px solid rgba(201,145,58,.3);padding-bottom:2px;
+  transition:all .2s;cursor:none;
+}
+.about-link:hover { border-color:var(--gold);gap:15px; }
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  padding:60px 40px 40px;
+  position:relative;z-index:2;
+  max-width:1100px;margin:0 auto;
+  text-align:center;
+}
+
+.footer-logo {
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:2.5rem;font-weight:700;
+  color:transparent;-webkit-text-stroke:1px rgba(160,108,32,.25);
+  margin-bottom:24px;
+}
+
+.footer-links { display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:32px; }
+.footer-link {
+  font-family:'Fira Code',monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;cursor:none;transition:color .2s;
+}
+.footer-link:hover { color:var(--gold); }
+
+.footer-divider { height:1px;background:var(--border);margin-bottom:24px; }
+
+.footer-bottom {
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-txt {
+  font-family:'Fira Code',monospace;font-size:.55rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal { opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1;transform:none; }
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}
+
+/* ============================================================
+   SELECTION & SCROLLBAR
+============================================================ */
+::selection { background:var(--gold);color:#fff; }
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg3); }
+::-webkit-scrollbar-thumb { background:var(--bg4);border-radius:3px; }
+.modal::-webkit-scrollbar { width:3px; }
+.modal::-webkit-scrollbar-thumb { background:var(--border2); }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:900px){
+  nav { padding:0 20px; }
+  .nav-link { display:none; }
+  .wrap { padding:0 20px; }
+  .featured-poem { grid-template-columns:1fr; }
+  .featured-left { border-right:none;border-bottom:1px solid var(--border);padding:36px 28px; }
+  .featured-right { padding:36px 28px; }
+  .about-poet-inner { grid-template-columns:1fr; }
+  .about-poet-visual { flex-direction:row; }
+  footer { padding:40px 20px 30px; }
+  .footer-bottom { justify-content:center;text-align:center; }
+  #cur,#ring { display:none; }
+  body { cursor:auto; }
+  a,button { cursor:pointer; }
+}
+
+@media(max-width:600px){
+  .hero { padding:60px 20px 50px; }
+  .poems-grid { grid-template-columns:1fr; }
+  .modal { border-radius:20px; }
+  .modal-header { padding:24px 24px 16px; }
+  .modal-body { padding:24px; }
+  .modal-footer { padding:20px 24px; }
+  .hero-title { font-size:3rem; }
+}
+</style>
 </head>
-<body class="bg-gray-100">
+<body>
 
-    <nav class="flex items-center justify-between px-6 py-5 bg-[#d1d1d1] border-b border-gray-400 md:px-12">
-        
-        <div class="text-lg font-extrabold tracking-widest text-gray-800 uppercase underline decoration-2 underline-offset-8">
-            My-Portfolio
+<div class="grain"></div>
+<div class="ambient"></div>
+<div class="ambient2"></div>
+<div id="cur"></div>
+<div id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <i class="fas fa-feather-alt nav-logo-icon"></i>
+    Ishak Yonghang
+  </a>
+  <div class="nav-right">
+    <a href="#poems" class="nav-link">कविताहरू</a>
+    <a href="#about-poet" class="nav-link">कवि</a>
+    <a href="https://yonghangishak.com.np" target="_blank" class="nav-link">Portfolio</a>
+    <span class="nav-count" id="nav-count">— कविताहरू</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-kicker">Koshi Province · Nepal</div>
+  <h1 class="hero-title">कविता संग्रह</h1>
+  <div class="hero-subtitle">Ishak Yonghang द्वारा</div>
+  <p class="hero-desc">
+    "भावनाको भाषामा लेखिएका शब्दहरू —<br>
+    हरेक कविता एक क्षण, एक सत्य, एक अनुभव।"
+  </p>
+  <a href="#featured" class="hero-cta">
+    <i class="fas fa-arrow-down"></i>
+    कविताहरू पढ्नुहोस्
+  </a>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- FEATURED POEM -->
+<div class="wrap">
+<section id="featured">
+  <div class="sec-header">
+    <span class="sec-header-label">Featured Poem</span>
+    <div class="sec-header-line"></div>
+    <span class="sec-header-num">01</span>
+  </div>
+
+  <div class="featured-poem reveal">
+    <div class="featured-left">
+      <div>
+        <div class="featured-tag">Latest Poem</div>
+        <div class="featured-title ne">मेरो स्मरण</div>
+        <div class="featured-divider"></div>
+        <div class="featured-about">
+          A poem about memory, loss, and the quiet grief of being forgotten — 
+          written from the hills of Panchthar, Nepal.
         </div>
+      </div>
+      <div class="featured-meta">
+        <span>✦ &nbsp;Ishak Yonghang</span>
+        <span>✦ &nbsp;Phidim, Panchthar · Nepal</span>
+        <span>✦ &nbsp;Emotion · Memory · Loss</span>
+      </div>
+    </div>
+    <div class="featured-right">
+      <div class="poem-text ne">
+        <span class="stanza"><span class="poem-line">भौतारिएको त्यही एउटा कथा,</span><span class="poem-line">फेरि दोहोरिएको देख्छु म</span><span class="poem-line">हिजो जुन मुटु छट्पटिन्थ्यो,</span><span class="poem-line">आज इतिहासमा भेट्छु म।</span></span><span class="stanza"><span class="poem-line">बगेर सिन्दूर सुकिसक्यो,</span><span class="poem-line">बाँकी त केवल कालो छ</span><span class="poem-line">शून्यमा बिलिन भएछन् खुसी,</span><span class="poem-line">चारैतिर पीडाकै जालो छ।</span></span><span class="stanza"><span class="poem-line">के माटो, के रुख, के सूर्य यहाँ?</span><span class="poem-line">केही पनि त म जान्दिनँ</span><span class="poem-line">आफ्नै सम्झने शक्ति कमजोर भो,</span><span class="poem-line">अब आफ्नै भनी कसैलाई मान्दिनँ।</span></span><span class="stanza"><span class="poem-line">हिजोको त्यो लासले अझै पनि,</span><span class="poem-line">स्वर्गको बाटो पाएको छैन</span><span class="poem-line">बिर्सिएका छन् यहाँ सबैले सबैलाई,</span><span class="poem-line">कसैको याद अब कतै छाएको छैन।</span></span>
+      </div>
+      <div class="poem-ornament">— ✦ —</div>
+    </div>
+  </div>
+</section>
 
-        <div class="flex items-center space-x-6 text-gray-600">
-            <a href="https://www.facebook.com/yonghangisaac" target="_blank" class="hover:text-black transition-colors">
-                <i class="fab fa-facebook-f text-lg"></i>
-            </a>
-            <a href="https://wa.me/9779820907795" target="_blank" class="hover:text-black transition-colors">
-                <i class="fab fa-whatsapp text-xl"></i>
-            </a>
-            <a href="mailto:yonghangissac@gmail.com" target="_blank" class="hover:text-black transition-colors">
-                <i class="far fa-envelope text-lg"></i>
-            </a>
+<!-- ALL POEMS GRID -->
+<section id="poems">
+  <div class="sec-header reveal">
+    <span class="sec-header-label">सबै कविताहरू</span>
+    <div class="sec-header-line"></div>
+    <span class="sec-header-num">02</span>
+  </div>
 
-            <div class="h-6 w-[1px] bg-gray-400 mx-2"></div>
-            
-            <a href="https://yonghangishak.com.np/" target="_blank" class="hover:text-black transition-colors" title="Profile">
-                <i class="fas fa-user-circle text-2xl"></i>
-            </a>
+  <div class="poems-grid" id="poemsGrid">
+    <!-- JS renders cards here -->
+  </div>
+</section>
+
+<!-- ABOUT POET -->
+<section id="about-poet">
+  <div class="sec-header reveal">
+    <span class="sec-header-label">कवि बारे</span>
+    <div class="sec-header-line"></div>
+    <span class="sec-header-num">03</span>
+  </div>
+
+  <div class="about-poet-inner">
+    <div class="about-poet-visual reveal d1">
+      <div class="poet-avatar-wrap">
+        <div class="poet-avatar-ring"></div>
+        <img class="poet-avatar"
+          src="https://scontent.fktm19-1.fna.fbcdn.net/v/t39.30808-6/484720029_1214268536782792_2219807835874787926_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeE2eu9kE8ERJaKVOS8oDPGzeO2PC5poXp947Y8Lmmhen0TmNHSH4oTHynBpp36i3beIqZvDcFWDxmqk-w--dOu5&_nc_ohc=IgKVA44EnLwQ7kNvwHeARNO&_nc_oc=Ado6Rxx-vgztG6fMvTf0YfC2KIVGzMeqIHVO6XFwLK3Hg1h34_D6eR2fEEMhgPaN0xo&_nc_zt=23&_nc_ht=scontent.fktm19-1.fna&_nc_gid=HRZCbwhELLjrsFwoksCXoQ&_nc_ss=7b2a8&oh=00_Af6PX_Y5vYTQyglELzrs7m3dbc2M89IoqjHYhn0OkeNEjA&oe=69FFCD07"
+          alt="Ishak Yonghang"
+          onerror="this.style.display='none';this.parentNode.querySelector('.poet-avatar-placeholder').style.display='flex';">
+        <div class="poet-avatar-placeholder" style="display:none;">IY</div>
+      </div>
+      <div class="poet-name-vertical">Ishak Yonghang · Poet</div>
+    </div>
+
+    <div class="about-poet-text reveal d2">
+      <h2>Words from the <em>Hills</em></h2>
+      <p>
+        म इशाक योन्हाङ — पाँचथरको फिदिमका पहाडहरूबाट आएको एक कवि। 
+        मेरा शब्दहरू ती भावनाहरूबाट जन्मेका छन् जसलाई भाषामा व्यक्त गर्न गाह्रो हुन्छ तर मनमा गहिरो बस्छन्।
+      </p>
+      <p>
+        Every poem I write is an honest attempt to capture something real — 
+        a feeling, a moment, a truth that lives between words. 
+        Writing, for me, is learning to be human.
+      </p>
+      <div class="about-tags">
+        <span class="about-tag">✦ Poetry</span>
+        <span class="about-tag">✦ Panchthar, Nepal</span>
+        <span class="about-tag">✦ Emotion</span>
+        <span class="about-tag">✦ Nepali Literature</span>
+        <span class="about-tag">✦ Nature</span>
+        <span class="about-tag">✦ Memory</span>
+      </div>
+      <a href="https://yonghangishak.com.np" target="_blank" class="about-link">
+        Visit Full Portfolio <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ishak Yonghang</div>
+  <div class="footer-links">
+    <a href="https://yonghangishak.com.np" target="_blank" class="footer-link">Portfolio</a>
+    <a href="https://www.facebook.com/yonghangisaac" target="_blank" class="footer-link">Facebook</a>
+    <a href="https://wa.me/9779820907795" target="_blank" class="footer-link">WhatsApp</a>
+    <a href="mailto:yonghangissac@gmail.com" class="footer-link">Email</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <div class="footer-txt">poem.yonghangishak.com.np</div>
+    <div class="footer-txt">Phidim, Panchthar · Nepal · 2026</div>
+    <div class="footer-txt">© Ishak Yonghang</div>
+  </div>
+</footer>
+
+<!-- POEM MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title ne" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModalBtn()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-poem-text ne" id="modalBody"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-author">— <strong>Ishak Yonghang</strong></div>
+      <span style="font-family:'Fira Code',monospace;font-size:.55rem;letter-spacing:.12em;color:var(--muted);" id="modalEmotion"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   POEMS DATA — Add more poems here
+============================================================ */
+const poems = [
+  {
+    title: "मेरो स्मरण",
+    emotion: "Memory · Loss",
+    preview: "भौतारिएको त्यही एउटा कथा, फेरि दोहोरिएको देख्छु म...",
+    body: `भौतारिएको त्यही एउटा कथा,
+फेरि दोहोरिएको देख्छु म
+हिजो जुन मुटु छट्पटिन्थ्यो,
+आज इतिहासमा भेट्छु म।
+
+बगेर सिन्दूर सुकिसक्यो,
+बाँकी त केवल कालो छ
+शून्यमा बिलिन भएछन् खुसी,
+चारैतिर पीडाकै जालो छ।
+
+के माटो, के रुख, के सूर्य यहाँ?
+केही पनि त म जान्दिनँ
+आफ्नै सम्झने शक्ति कमजोर भो,
+अब आफ्नै भनी कसैलाई मान्दिनँ।
+
+हिजोको त्यो लासले अझै पनि,
+स्वर्गको बाटो पाएको छैन
+बिर्सिएका छन् यहाँ सबैले सबैलाई,
+कसैको याद अब कतै छाएको छैन।`
+  },
+  {
+    title: "नयाँ कविता थप्नुहोस्",
+    emotion: "Nature · Peace",
+    preview: "यहाँ तपाईंको अर्को कविताको पूर्वावलोकन राख्नुहोस्...",
+    body: `यहाँ तपाईंको कविता थप्नुहोस्।
+
+poems array मा नयाँ object थप्नुहोस्:
+{
+  title: "कविताको शीर्षक",
+  emotion: "भावना",
+  preview: "पहिलो लाइनहरू...",
+  body: "पूरा कविता..."
+}`
+  }
+];
+
+/* ============================================================
+   RENDER POEM CARDS
+============================================================ */
+function renderPoems() {
+  const grid = document.getElementById('poemsGrid');
+  const count = document.getElementById('nav-count');
+  count.textContent = poems.length + ' कविताहरू';
+
+  grid.innerHTML = poems.map((p, i) => `
+    <div class="poem-card reveal d${(i%4)+1}" onclick="openModal(${i})" role="button" tabindex="0"
+         onkeydown="if(event.key==='Enter')openModal(${i})">
+      <div class="poem-card-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="poem-card-inner">
+        <div class="poem-card-tag">${p.emotion.split('·')[0].trim()}</div>
+        <div class="poem-card-title ne">${p.title}</div>
+        <div class="poem-card-preview ne">${p.preview}</div>
+        <div class="poem-card-footer">
+          <span class="poem-card-read">पढ्नुहोस् <i class="fas fa-arrow-right"></i></span>
+          <span class="poem-card-emotion">${p.emotion}</span>
         </div>
-        
-    </nav>
+      </div>
+    </div>
+  `).join('');
 
+  // Re-observe new cards
+  document.querySelectorAll('.poem-card').forEach(el => rev.observe(el));
+}
+
+/* ============================================================
+   MODAL
+============================================================ */
+function openModal(idx) {
+  const p = poems[idx];
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalEmotion').textContent = p.emotion;
+
+  // Format body: split stanzas by blank line
+  const stanzas = p.body.trim().split(/\n\n+/);
+  document.getElementById('modalBody').innerHTML = stanzas.map(s =>
+    `<span class="stanza">${s.split('\n').map(l=>`<span class="poem-line">${l}</span>`).join('')}</span>`
+  ).join('');
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModalBtn(); });
+
+/* ============================================================
+   CURSOR
+============================================================ */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=(mx-4)+'px'; cur.style.top=(my-4)+'px';
+});
+(function animRing(){
+  rx+=(mx-rx-15)*.12; ry+=(my-ry-15)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.poem-card,.modal-close,.hero-cta,.footer-link,.about-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cur.style.transform='scale(2.5)';ring.style.transform='scale(1.6)'; });
+  el.addEventListener('mouseleave',()=>{ cur.style.transform='scale(1)';ring.style.transform='scale(1)'; });
+});
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+const rev = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight) el.classList.add('visible');
+  });
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPoems();
+</script>
 </body>
 </html>
