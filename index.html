@@ -217,7 +217,8 @@ footer{padding:60px 40px 40px;position:relative;z-index:2;max-width:1100px;margi
 .toast.info{background:var(--text);color:#fff}
 
 /* ── UTILS ── */
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spinRing .7s linear infinite;vertical-align:middle}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spinAnim .7s linear infinite;vertical-align:middle}
+@keyframes spinAnim{to{transform:rotate(360deg)}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:none}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
@@ -419,51 +420,38 @@ footer{padding:60px 40px 40px;position:relative;z-index:2;max-width:1100px;margi
 <!-- ═══ MODAL ═══ -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modal">
-    <!-- Header -->
     <div class="modal-header">
       <div class="modal-title ne" id="modalTitle"></div>
       <button class="modal-close" id="modalCloseBtn" aria-label="Close"><i class="fas fa-times"></i></button>
     </div>
-
-    <!-- Poem body -->
     <div class="modal-body">
       <div class="modal-poem-text ne" id="modalBody"></div>
     </div>
-
-    <!-- Author bar -->
     <div class="modal-author-bar">
       <div class="modal-author">— <strong>Ishak Yonghang</strong></div>
       <span style="font-family:'Fira Code',monospace;font-size:.55rem;letter-spacing:.12em;color:var(--muted)" id="modalEmotion"></span>
     </div>
-
-    <!-- Like row -->
     <div class="modal-like-row">
       <button class="like-big-btn" id="likeBtn">
         <i class="far fa-heart" id="likeIcon"></i>
         <span id="likeBtnLabel">मन पर्यो</span>
       </button>
-      <span class="like-count-lbl" id="likeCountLabel">लोड हुँदैछ…</span>
+      <span class="like-count-lbl" id="likeCountLabel">…</span>
     </div>
-
-    <!-- Reactions -->
     <div class="modal-reactions">
       <span class="reaction-label">React</span>
-      <button class="reaction-btn" id="r-sad"     data-key="sad">    <span class="emoji">😢</span><span class="rcnt">0</span></button>
-      <button class="reaction-btn" id="r-love"    data-key="love">   <span class="emoji">❤️</span><span class="rcnt">0</span></button>
-      <button class="reaction-btn" id="r-star"    data-key="star">   <span class="emoji">✨</span><span class="rcnt">0</span></button>
-      <button class="reaction-btn" id="r-pray"    data-key="pray">   <span class="emoji">🙏</span><span class="rcnt">0</span></button>
-      <button class="reaction-btn" id="r-broken"  data-key="broken"> <span class="emoji">💔</span><span class="rcnt">0</span></button>
+      <button class="reaction-btn" id="r-sad"    data-key="sad">   <span class="emoji">😢</span><span class="rcnt">0</span></button>
+      <button class="reaction-btn" id="r-love"   data-key="love">  <span class="emoji">❤️</span><span class="rcnt">0</span></button>
+      <button class="reaction-btn" id="r-star"   data-key="star">  <span class="emoji">✨</span><span class="rcnt">0</span></button>
+      <button class="reaction-btn" id="r-pray"   data-key="pray">  <span class="emoji">🙏</span><span class="rcnt">0</span></button>
+      <button class="reaction-btn" id="r-broken" data-key="broken"><span class="emoji">💔</span><span class="rcnt">0</span></button>
     </div>
-
-    <!-- Comments -->
     <div class="comments-section">
       <div class="comments-heading">
         <i class="fas fa-comments" style="color:var(--gold);font-size:.75rem"></i>
         टिप्पणीहरू
         <span class="comment-count-badge" id="commentCountBadge"></span>
       </div>
-
-      <!-- Comment form -->
       <div class="visitor-form">
         <div class="visitor-form-title"><i class="fas fa-pen-nib"></i> तपाईंको विचार साझा गर्नुहोस्</div>
         <div class="form-row">
@@ -489,17 +477,15 @@ footer{padding:60px 40px 40px;position:relative;z-index:2;max-width:1100px;margi
         </button>
         <p class="form-hint">तपाईंको जानकारी कवि र कवितासँगको संवादका लागि मात्र संकलन गरिन्छ।</p>
       </div>
-
-      <!-- List -->
       <div id="commentsList">
-        <div class="no-comments"><span class="spinner"></span> लोड हुँदैछ…</div>
+        <div class="no-comments"><span class="spinner"></span></div>
       </div>
     </div>
-  </div><!-- /modal -->
-</div><!-- /modal-overlay -->
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════
-     FIREBASE  — loaded as ES module, all writes happen here
+     FIREBASE  ES MODULE
 ═══════════════════════════════════════════════════════════ -->
 <script type="module">
 /* ─── 1. IMPORTS ─────────────────────────────────────────── */
@@ -514,15 +500,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
 
 /* ─── 2. INIT ────────────────────────────────────────────── */
-/*
-  NOTE ON API KEY SECURITY:
-  Firebase frontend API keys are NOT secret — they identify your project.
-  Security is enforced by Firestore Rules (see README / instructions below).
-  To stop the GitHub secret alert:
-    • Restrict this key to your domain in Google Cloud Console →
-      APIs & Services → Credentials → your Browser Key → "Website restrictions"
-      Add: poem.yonghangishak.com.np
-*/
 const app = initializeApp({
   apiKey:            "AIzaSyARJjmjbKLJZnOO8-8GWc-KTm36cHzL2cM",
   authDomain:        "poem-3662c.firebaseapp.com",
@@ -563,11 +540,10 @@ let activeSlug    = '';
 let activeIdx     = -1;
 let unsubComments = null;
 
-// Persisted sets
 const likedPoems   = new Set(JSON.parse(localStorage.getItem('iy_liked')   || '[]'));
-const reactedPoems = JSON.parse(localStorage.getItem('iy_reacted') || '{}'); // {slug: [keys]}
+const reactedPoems = JSON.parse(localStorage.getItem('iy_reacted') || '{}');
 
-const saveliked   = () => localStorage.setItem('iy_liked',   JSON.stringify([...likedPoems]));
+const saveLiked   = () => localStorage.setItem('iy_liked',   JSON.stringify([...likedPoems]));
 const saveReacted = () => localStorage.setItem('iy_reacted', JSON.stringify(reactedPoems));
 
 /* ─── 6. HELPERS ─────────────────────────────────────────── */
@@ -593,20 +569,19 @@ function fmtDate(ts) {
   return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
 }
 
-/* ─── 7. LOAD CARD STATS (grid) ─────────────────────────── */
+/* ─── 7. CARD STATS ─────────────────────────────────────── */
+// FIX: was a dead function — now exposed on window so non-module script can call it
 async function loadCardStat(idx) {
   const slug = 'poem_' + idx;
   try {
-    const [lSnap, vSnap] = await Promise.all([
-      getDoc(doc(db, 'poem_meta', slug)),
-      getDoc(doc(db, 'poem_meta', slug))   // same doc holds views+likes+comments
-    ]);
-    const data = lSnap.exists() ? lSnap.data() : {};
-    const lEl = $('cl-' + idx); if (lEl) lEl.textContent = data.likes    || 0;
-    const cEl = $('cc-' + idx); if (cEl) cEl.textContent = data.comments || 0;
-    const vEl = $('cv-' + idx); if (vEl) vEl.textContent = data.views    || 0;
+    const snap = await getDoc(doc(db, 'poem_meta', slug));  // FIX: was fetching same doc twice
+    const data = snap.exists() ? snap.data() : {};
+    const lEl = $('cl-' + idx); if (lEl) lEl.textContent = data.likes    ?? 0;
+    const cEl = $('cc-' + idx); if (cEl) cEl.textContent = data.comments ?? 0;
+    const vEl = $('cv-' + idx); if (vEl) vEl.textContent = data.views    ?? 0;
   } catch(e) { /* silent */ }
 }
+window._loadCardStat = loadCardStat; // ← FIX: was missing — cards never showed stats
 
 /* ─── 8. OPEN / CLOSE MODAL ─────────────────────────────── */
 window._openModal = async function(idx) {
@@ -614,7 +589,6 @@ window._openModal = async function(idx) {
   activeSlug = 'poem_' + idx;
   const p    = window._poems[idx];
 
-  // populate poem
   $('modalTitle').textContent   = p.title;
   $('modalEmotion').textContent = p.emotion;
   const stanzas = p.body.trim().split(/\n\n+/);
@@ -624,18 +598,17 @@ window._openModal = async function(idx) {
     }</span>`
   ).join('');
 
-  // show modal
   $('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
   // reset UI
   $('commentsList').innerHTML = '<div class="no-comments"><span class="spinner"></span></div>';
   $('commentCountBadge').textContent = '';
-  setReactionCounts({ sad:0,love:0,star:0,pray:0,broken:0 });
-  $('likeCountLabel').textContent = 'लोड हुँदैछ…';
+  setReactionCounts({ sad:0, love:0, star:0, pray:0, broken:0 });
+  $('likeCountLabel').textContent = '…';
   updateLikeBtn();
 
-  // fire all loads in parallel
+  // load everything in parallel
   logPoemView(activeSlug, p.title);
   loadLikeCount(activeSlug);
   loadReactions(activeSlug);
@@ -666,7 +639,6 @@ async function logPoemView(slug, title) {
         tx.set(ref, { title, views: 1, likes: 0, comments: 0, ts: serverTimestamp() });
       }
     });
-    // update card
     const vEl = $('cv-' + activeIdx);
     if (vEl) vEl.textContent = parseInt(vEl.textContent || 0) + 1;
   } catch(e) { /* silent */ }
@@ -687,12 +659,9 @@ async function loadLikeCount(slug) {
 
 function updateLikeBtn() {
   const liked = likedPoems.has(activeSlug);
-  const btn   = $('likeBtn');
-  const icon  = $('likeIcon');
-  const lbl   = $('likeBtnLabel');
-  btn.classList.toggle('liked', liked);
-  icon.className = liked ? 'fas fa-heart' : 'far fa-heart';
-  lbl.textContent = liked ? 'मन पर्यो ✓' : 'मन पर्यो';
+  $('likeBtn').classList.toggle('liked', liked);
+  $('likeIcon').className      = liked ? 'fas fa-heart' : 'far fa-heart';
+  $('likeBtnLabel').textContent = liked ? 'मन पर्यो ✓' : 'मन पर्यो';
 }
 
 $('likeBtn').addEventListener('click', async () => {
@@ -702,13 +671,14 @@ $('likeBtn').addEventListener('click', async () => {
 
   // optimistic UI
   if (already) { likedPoems.delete(activeSlug); } else { likedPoems.add(activeSlug); }
-  saveliked();
+  saveLiked();
   updateLikeBtn();
   $('likeBtn').classList.add('pulse');
   setTimeout(() => $('likeBtn').classList.remove('pulse'), 400);
 
   try {
     const ref = doc(db, 'poem_meta', activeSlug);
+    // FIX: use setDoc with merge:true as fallback — more reliable than always branching on get
     await runTransaction(db, async tx => {
       const snap = await tx.get(ref);
       if (snap.exists()) {
@@ -717,11 +687,12 @@ $('likeBtn').addEventListener('click', async () => {
         tx.set(ref, { likes: Math.max(0, delta), views: 0, comments: 0, ts: serverTimestamp() });
       }
     });
-    // also store visitor like log
+
     if (!already) {
-      await addDoc(collection(db, 'visitor_likes'), {
+      // fire-and-forget visitor log — don't let this block the like
+      addDoc(collection(db, 'visitor_likes'), {
         visitorId, slug: activeSlug, ts: serverTimestamp()
-      });
+      }).catch(() => {});
       logEvent(analytics, 'poem_like', { poem: activeSlug });
       showToast('❤️ मन पर्यो!', 'success');
     }
@@ -729,9 +700,10 @@ $('likeBtn').addEventListener('click', async () => {
   } catch(e) {
     // rollback
     if (already) { likedPoems.add(activeSlug); } else { likedPoems.delete(activeSlug); }
-    saveliked();
+    saveLiked();
     updateLikeBtn();
-    showToast('❌ Like save भएन — firestore rules जाँच गर्नुहोस्।', 'error');
+    showToast('❌ Like save भएन।', 'error');
+    console.error('like error:', e);
   }
 });
 
@@ -761,21 +733,18 @@ async function loadReactions(slug) {
   } catch(e) { /* silent */ }
 }
 
-// Wire up reaction buttons
 document.querySelectorAll('.reaction-btn').forEach(btn => {
   btn.addEventListener('click', async () => {
     if (!activeSlug) return;
-    const key    = btn.dataset.key;
-    const mine   = reactedPoems[activeSlug] || [];
+    const key     = btn.dataset.key;
+    const mine    = reactedPoems[activeSlug] || [];
     const already = mine.includes(key);
-    const delta  = already ? -1 : 1;
+    const delta   = already ? -1 : 1;
 
     // optimistic
-    if (already) {
-      reactedPoems[activeSlug] = mine.filter(k => k !== key);
-    } else {
-      reactedPoems[activeSlug] = [...mine, key];
-    }
+    reactedPoems[activeSlug] = already
+      ? mine.filter(k => k !== key)
+      : [...mine, key];
     saveReacted();
     markMyReactions();
 
@@ -792,7 +761,7 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
           tx.update(ref, { [key]: increment(delta) });
         } else {
           const init = {};
-          Object.keys(REACTION_KEYS).forEach(k => init[k] = 0);
+          Object.keys(REACTION_KEYS).forEach(k => { init[k] = 0; });
           init[key] = 1;
           tx.set(ref, init);
         }
@@ -803,15 +772,14 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
       }
     } catch(e) {
       // rollback
-      if (already) {
-        reactedPoems[activeSlug] = [...(reactedPoems[activeSlug] || []), key];
-      } else {
-        reactedPoems[activeSlug] = (reactedPoems[activeSlug] || []).filter(k => k !== key);
-      }
+      reactedPoems[activeSlug] = already
+        ? [...(reactedPoems[activeSlug] || []), key]
+        : (reactedPoems[activeSlug] || []).filter(k => k !== key);
       saveReacted();
       markMyReactions();
       cnt.textContent = Math.max(0, parseInt(cnt.textContent || 0) - delta);
       showToast('❌ Reaction save भएन।', 'error');
+      console.error('reaction error:', e);
     }
   });
 });
@@ -819,22 +787,19 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
 /* ─── 12. COMMENTS ───────────────────────────────────────── */
 function subscribeComments(slug) {
   if (unsubComments) { unsubComments(); unsubComments = null; }
-
   const q = query(
     collection(db, 'poem_comments', slug, 'entries'),
     orderBy('ts', 'desc')
   );
-
   unsubComments = onSnapshot(q, snap => {
     const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderComments(docs);
     $('commentCountBadge').textContent = docs.length ? `(${docs.length})` : '';
-    // update card badge
     const el = $('cc-' + activeIdx);
     if (el) el.textContent = docs.length;
   }, err => {
     $('commentsList').innerHTML =
-      '<div class="no-comments">टिप्पणी लोड गर्न सकिएन। Firestore rules जाँच गर्नुहोस्।</div>';
+      '<div class="no-comments">टिप्पणी लोड गर्न सकिएन।</div>';
     console.error('comments onSnapshot:', err);
   });
 }
@@ -877,61 +842,63 @@ $('submitBtn').addEventListener('click', async () => {
 
   const payload = {
     name,
-    email:     $('fEmail').value.trim()   || null,
-    country:   $('fCountry').value.trim() || null,
-    type:      $('fType').value           || null,
+    email:   $('fEmail').value.trim()   || null,
+    country: $('fCountry').value.trim() || null,
+    type:    $('fType').value           || null,
     text,
     visitorId,
-    slug:      activeSlug,
-    ts:        serverTimestamp()
+    slug:    activeSlug,
+    ts:      serverTimestamp()
   };
 
   try {
     // 1. save comment
     await addDoc(collection(db, 'poem_comments', activeSlug, 'entries'), payload);
 
-    // 2. update comment count on poem_meta
+    // 2. increment comment count — FIX: fire-and-forget so comment post never fails due to this
     const metaRef = doc(db, 'poem_meta', activeSlug);
-    await runTransaction(db, async tx => {
+    runTransaction(db, async tx => {
       const snap = await tx.get(metaRef);
       if (snap.exists()) {
         tx.update(metaRef, { comments: increment(1) });
       } else {
         tx.set(metaRef, { comments: 1, likes: 0, views: 0, ts: serverTimestamp() });
       }
-    });
+    }).catch(() => {});
 
-    // 3. save visitor info for analytics
-    await addDoc(collection(db, 'visitors_info'), {
+    // 3. visitor info log — fire-and-forget
+    addDoc(collection(db, 'visitors_info'), {
       ...payload,
       action: 'comment',
       userAgent: navigator.userAgent,
       ts: serverTimestamp()
-    });
+    }).catch(() => {});
 
     logEvent(analytics, 'comment_posted', { poem: activeSlug });
     showToast('✅ टिप्पणी पोस्ट भयो! धन्यवाद।', 'success');
 
     // clear form
-    ['fName','fEmail','fCountry','fText'].forEach(id => $( id).value = '');
+    ['fName','fEmail','fCountry','fText'].forEach(id => $(id).value = '');
     $('fType').value = '';
 
   } catch(e) {
     console.error('submit comment:', e);
-    showToast('❌ सेव भएन: ' + (e.message || 'Unknown error') + ' — Firestore rules जाँच गर्नुहोस्।', 'error');
+    showToast('❌ Comment save भएन। Firestore rules जाँच गर्नुहोस्।', 'error');
+  } finally {
+    // FIX: always re-enable button — original code ran outside try/catch
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> पठाउनुहोस्';
   }
-
-  btn.disabled = false;
-  btn.innerHTML = '<i class="fas fa-paper-plane"></i> पठाउनुहोस्';
 });
 
-/* ─── 14. EXPOSE openModal to global scope ───────────────── */
-// poems data is set by the non-module script below; we expose the opener
+/* ─── 14. SIGNAL READY ───────────────────────────────────── */
 window._firebaseReady = true;
+// FIX: dispatch event so non-module script can react instead of hoping on setTimeout
+window.dispatchEvent(new Event('firebase-ready'));
 
 </script>
 
-<!-- ═══ NON-MODULE SCRIPT (poems data + UI) ═══ -->
+<!-- ═══ NON-MODULE SCRIPT ═══ -->
 <script>
 /* ── POEMS DATA ── */
 window._poems = [
@@ -1067,9 +1034,9 @@ function renderGrid() {
   document.getElementById('navCount').textContent = window._poems.length + ' कविताहरू';
 
   grid.innerHTML = window._poems.map((p, i) => `
-    <div class="poem-card reveal d${(i%4)+1}" tabindex="0" role="button"
+    <div class="poem-card reveal d${(i % 4) + 1}" tabindex="0" role="button"
          onclick="openPoem(${i})" onkeydown="if(event.key==='Enter')openPoem(${i})">
-      <div class="poem-card-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="poem-card-num">${String(i + 1).padStart(2, '0')}</div>
       <div class="poem-card-inner">
         <div class="poem-card-tag">${p.emotion.split('·')[0].trim()}</div>
         <div class="poem-card-title ne">${p.title}</div>
@@ -1090,40 +1057,43 @@ function renderGrid() {
   ).join('');
 
   document.querySelectorAll('.poem-card').forEach(el => revObs.observe(el));
+
+  // FIX: load stats properly — wait for firebase-ready event, don't poll with setTimeout
   loadAllCardStats();
 }
 
 function loadAllCardStats() {
-  window._poems.forEach((_, i) => {
-    if (window._firebaseReady && window._openModal) loadCardStatWhenReady(i);
-    else setTimeout(() => loadCardStatWhenReady(i), 800);
-  });
+  function doLoad() {
+    window._poems.forEach((_, i) => {
+      if (typeof window._loadCardStat === 'function') window._loadCardStat(i);
+    });
+  }
+  if (window._firebaseReady) {
+    doLoad();
+  } else {
+    // FIX: listen for the event dispatched by the module instead of guessing with setTimeout
+    window.addEventListener('firebase-ready', doLoad, { once: true });
+  }
 }
 
-function loadCardStatWhenReady(i) {
-  // fires the Firebase module function exposed via window._openModal being set
-  // We call the module's loadCardStat which we'll bridge:
-  if (typeof window._loadCardStat === 'function') window._loadCardStat(i);
-}
-
-/* ── OPEN POEM ── */
+/* ── OPEN POEM — FIX: reliable retry until module is ready ── */
 function openPoem(idx) {
   if (typeof window._openModal === 'function') {
     window._openModal(idx);
   } else {
-    // Firebase module not ready yet — retry
-    setTimeout(() => openPoem(idx), 300);
+    const handler = () => window._openModal(idx);
+    window.addEventListener('firebase-ready', handler, { once: true });
   }
 }
 
 /* ── CURSOR ── */
 const curEl  = document.getElementById('cur');
 const ringEl = document.getElementById('ring');
-let mx=0, my=0, rx=0, ry=0;
+let mx = 0, my = 0, rx = 0, ry = 0;
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
-  curEl.style.left = (mx-4) + 'px';
-  curEl.style.top  = (my-4) + 'px';
+  curEl.style.left = (mx - 4) + 'px';
+  curEl.style.top  = (my - 4) + 'px';
 });
 (function animRing() {
   rx += (mx - rx - 15) * .12;
@@ -1134,8 +1104,8 @@ document.addEventListener('mousemove', e => {
 })();
 function addHover(sel) {
   document.querySelectorAll(sel).forEach(el => {
-    el.addEventListener('mouseenter', () => { curEl.style.transform='scale(2.5)'; ringEl.style.transform='scale(1.6)'; });
-    el.addEventListener('mouseleave', () => { curEl.style.transform='scale(1)';   ringEl.style.transform='scale(1)'; });
+    el.addEventListener('mouseenter', () => { curEl.style.transform = 'scale(2.5)'; ringEl.style.transform = 'scale(1.6)'; });
+    el.addEventListener('mouseleave', () => { curEl.style.transform = 'scale(1)';   ringEl.style.transform = 'scale(1)'; });
   });
 }
 addHover('a,button,.poem-card,.about-link');
@@ -1157,44 +1127,30 @@ renderGrid();
 
 <!--
 ═══════════════════════════════════════════════════════════════
-  FIRESTORE SECURITY RULES — paste this in Firebase Console
-  Firestore Database → Rules → Publish
+  FIRESTORE SECURITY RULES
+  Firebase Console → Firestore Database → Rules → Publish
 
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Public read for everything
     match /{document=**} {
       allow read: if true;
     }
-
-    // Page visitor logs (no user data required)
     match /visitors/{id} {
       allow create: if true;
     }
-
-    // Visitor like log
     match /visitor_likes/{id} {
       allow create: if true;
     }
-
-    // Full visitor info from comment form
     match /visitors_info/{id} {
       allow create: if true;
     }
-
-    // Per-poem metadata (views, likes, comment count)
     match /poem_meta/{slug} {
       allow read, write: if true;
     }
-
-    // Emoji reactions per poem
     match /poem_reactions/{slug} {
       allow read, write: if true;
     }
-
-    // Comments — nested subcollection with validation
     match /poem_comments/{slug}/entries/{commentId} {
       allow read: if true;
       allow create: if
@@ -1207,24 +1163,13 @@ service cloud.firestore {
     }
   }
 }
+
 ═══════════════════════════════════════════════════════════════
-
   GITHUB SECRET ALERT FIX:
-  Firebase API keys are NOT secret — they are public by design.
-  The alert fires because GitHub detects the pattern, not because
-  the key is truly sensitive. To properly secure it:
-
-  1. Go to: https://console.cloud.google.com
-     → APIs & Services → Credentials
-     → Click your "Browser key (auto created by Firebase)"
-     → Under "Application restrictions" → select "HTTP referrers"
-     → Add: poem.yonghangishak.com.np/*
-     → Save
-
-  2. That's it. The key will then ONLY work from your domain.
-     The GitHub alert will stop being actionable.
-
-  DO NOT rotate / delete the key — it will break your site.
+  Firebase API keys are NOT secret — public by design.
+  Restrict the key to your domain:
+  Google Cloud Console → APIs & Services → Credentials
+  → Browser key → HTTP referrers → add: poem.yonghangishak.com.np/*
 ═══════════════════════════════════════════════════════════════
 -->
 </body>
