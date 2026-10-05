@@ -49,6 +49,19 @@ a{color:inherit}
 .ne{font-family:var(--nep)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+/* ---------- loading screen (Ishak's original, in the new colours) ---------- */
+#loader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(900px 420px at 70% -10%,#2A3E4B,transparent),linear-gradient(170deg,#16222B,#1C2A33);color:#fff;transition:opacity .7s ease,visibility .7s ease}
+#loader.fade-out{opacity:0;visibility:hidden}
+.loader-name{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,9vw,5.2rem);letter-spacing:.14em;overflow:hidden;padding-left:.14em}
+.loader-name span{display:inline-block;animation:slideUp .8s cubic-bezier(.16,1,.3,1) both}
+.loader-name span:nth-child(2){animation-delay:.08s}.loader-name span:nth-child(3){animation-delay:.14s}.loader-name span:nth-child(4){animation-delay:.2s}.loader-name span:nth-child(5){animation-delay:.26s}
+.loader-bar{width:0;height:2px;max-width:160px;margin:1.2rem auto 0;background:var(--rhodo);animation:barGrow 1.6s ease forwards}
+.loader-sub{margin-top:.9rem;font-family:var(--display);font-size:.82rem;letter-spacing:.32em;color:#9FCBB2;padding-left:.32em;animation:fadeIn .8s .4s both}
+.loader-np{margin-top:.4rem;font-family:var(--nep);font-size:.95rem;color:#9FB0B7;animation:fadeIn .8s .6s both}
+@keyframes slideUp{from{transform:translateY(120%);opacity:0}to{transform:none;opacity:1}}
+@keyframes barGrow{to{width:100%}}
+@keyframes fadeIn{from{opacity:0}}
+body.loading{overflow:hidden}
 /* ---------- header ---------- */
 .top{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .25s,box-shadow .25s}
 .top.scrolled{background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
@@ -201,11 +214,19 @@ footer a{color:#fff}
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}}
 </style>
 </head>
-<body>
+<body class="loading">
+<div id="loader" role="status" aria-label="Loading poems">
+  <div>
+    <div class="loader-name" aria-hidden="true"><span>I</span><span>S</span><span>H</span><span>A</span><span>K</span></div>
+    <div class="loader-bar"></div>
+    <p class="loader-sub">VERSES OF LIFE</p>
+    <p class="loader-np" lang="ne">कविताहरू</p>
+  </div>
+</div>
 <header class="top" id="top">
   <div class="wrap top-in">
     <a class="brand" href="#home"><span class="mono">IY</span><span>Verses of Life<small>by Ishak Yonghang</small></span></a>
-    <nav class="tlinks" aria-label="Sections"><a href="#poems">Poems</a><a href="#thoughts">Thoughts</a><a href="#poet">The poet</a><a href="https://yonghangishak.com.np/">Main site</a></nav>
+    <nav class="tlinks" aria-label="Sections"><a href="#poems">Poems</a><a href="#thoughts">Thoughts</a><a href="#poet">The poet</a><a href="https://yonghangishak.com.np/" target="_blank" rel="noopener">Main site</a></nav>
     <button class="ibtn" id="themeBtn" type="button" aria-label="Switch to dark mode"><span class="i-moon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span><span class="i-sun"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span></button>
   </div>
 </header>
@@ -256,7 +277,7 @@ footer a{color:#fff}
       <div>
         <h2>Ishak Yonghang<span lang="ne">इशाक योङहाङ</span></h2>
         <p>A poet and political science student from Phidim, Panchthar. I write in Nepali and English, and I believe in Jesus. More about me, my work and how to reach me is on my main site.</p>
-        <div class="acts"><a class="btn fill" href="https://yonghangishak.com.np/">Visit my main site</a><a class="btn" href="https://wa.me/9779820907795" data-c="wa" target="_blank" rel="noopener">Say hello on WhatsApp</a></div>
+        <div class="acts"><a class="btn fill" href="https://yonghangishak.com.np/" target="_blank" rel="noopener">Visit my main site</a><a class="btn" href="https://wa.me/9779820907795" data-c="wa" target="_blank" rel="noopener">Say hello on WhatsApp</a></div>
       </div>
     </div>
   </div>
@@ -276,7 +297,7 @@ footer a{color:#fff}
   <a href="#poems"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 7h6"/></svg><span>Poems</span></a>
   <button type="button" class="main" id="randBtn" aria-label="Read a random poem"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg></button>
   <a href="#thoughts"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5H3v7h4c0 3-1 5-4 5zM14 21c3 0 7-1 7-8V5h-7v7h4c0 3-1 5-4 5z"/></svg><span>Thoughts</span></a>
-  <a href="https://yonghangishak.com.np/"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Poet</span></a>
+  <a href="https://yonghangishak.com.np/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Poet</span></a>
 </nav>
 
 <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="rTitle">
@@ -292,6 +313,14 @@ footer a{color:#fff}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+/* ===== loading screen ===== */
+(function(){
+  var seen=false; try{ seen=!!sessionStorage.getItem('poem-loader'); sessionStorage.setItem('poem-loader','1'); }catch(e){}
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var wait = calm ? 200 : (seen ? 700 : 1800);
+  function hide(){ var l=document.getElementById('loader'); if(!l) return; l.classList.add('fade-out'); document.body.classList.remove('loading'); setTimeout(function(){ l.remove(); }, 800); }
+  setTimeout(hide, wait);
+})();
 /* ===== built-in poems (shown until the admin's poems load, or if offline) ===== */
 var BUILTIN = [{"s": "the-gossip-rope", "t": "The Gossip Rope", "k": "", "b": "I am not upset with this cursed world,\nBut something is growing in my forehead.\nThat is not a dream, that is a peace.\nI see a rope, I see a hill,\nWhich help each other to climb.\n\nI fear to sleep, I fear to dream,\n'Cause this is a coffin.\nI want to be alert, I want to take care,\nBut someone forces me to fall asleep,\nSomeone forces me to see a dream.\n\nI see the calm, I feel the pain,\nMy heart is burned\nPlease pull me some,\n'Cause this feels like an exit button.\nOh, it is a dream, oh, it is a fear,\nOh, it is a gossip rope.\n\nSometimes I feel, it's not a curse,\nIt's not a dream, it's not a force,\nO it's a gossip rope.\nI want to go back, I want to see a dream,\nI want to go back to my father's house,\nI worry about being The Prodigal Son.", "ne": false, "featured": true}, {"s": "kinariyeko-phul", "t": "किनारिएको फुल", "k": "Love", "b": "न बयान हुन्छ शब्दले\nन कुनै रुप छ यो प्रेमको\nएकोहोरो अनि गहिरो\nछ प्रेम तिम्रो लागि सदाको\nअश्रुको मृदुलय छ सधै\nफेरि आउँछौ कि भनि आफै\nमन भित्र बनाउछु पिन्जडा शब्दको आफै\nवाल्यकालको उकाली देख्छु म छर्लङ्गै\nकति सुन्दर त्यो बिनोदको सुस्केरा\nत्यो खुशीको योजना\nत्यो किनारिको संरचना\nतर खै किन हुदैछ अचेल बेदना\nखै त्यो फर्किन्छ कि भनि दोभानमा छु\nमेट्टि जाने सपना आशाले कोर्दै छु\nरित बुझाउने आशा तस्विर हेरि धित बुझाउदै छु\nखै किन हो बाल्यकाल सम्झि म आफै बौलाउदै छु ।", "ne": true}, {"s": "kafin", "t": "कफिन", "k": "Emotion", "b": "जहाँ छु म खुसी छु,\nअन्धकार नै सहि म खुसी छु,\nजिवन मेरो यहिँ त रहेछ,\nमृत्यु सँगसगै हिड्दै छु,\nयो मृत्युदेखि डराउँछन् सबै,\nतर म त सुन्दर देख्दैछु ।\n\nजहाँ छु म अराममा छु,\nकफिन भित्र नै सहि म आराममा छु,\nछलमा बाचेको रहेछु आजसम्म,\nम त चुँडिएको पात झैँ जर्दैछु,\nम खुसी छु आज हेर,\nकिनकि म भित्र भित्रै मर्दैछु ।", "ne": true}, {"s": "nachaheko-sangeet", "t": "नचाहेको सङ्गीत", "k": "Reflection", "b": "म त्यहाँ छु,\nजहाँ कोहि आउन चाहँदैन,\nम त्योसंग छु,\nजोसंग केहि बस्न चाहँदैन,\nम त्यसको प्रतिक्षामा छु,\nजससंग कोहि नजर जुधाउन चाहँदैन,\nम त्यसलाई सुन्दर मान्छु,\nदुनियाँ जसलाई कुरुप ठान्दछ,\nहो त्यसको प्रतिक्षामा छु,\nजसलाई दुनियाँले मृत्यु भनि जान्दछ,\nहो म मृत्युकै प्रतिक्षामा छु,\nजस देखि दुनियाँ भाग्दछ ।", "ne": true}, {"s": "ashru-bipanako", "t": "अश्रु बिपनाको", "k": "Farewell", "b": "सगर् छुन सागर छोड्नु पर्छ सबैलाई\nपङक्ति पङक्ति लख्नलाई पनि\nबलि हुनुपर्छ मसिलाई\nचुडिएपछि त नाभि आमाबाट\nबाच्न सिकाउछ बालकलाई\nछुटिएपछि त प्यारो मान्छेसग\nजिउन सिकाउछ आफैलाई\nअन्जान पानामा काहनी लेखी\nफेरी अन्जान भई\nबिलाउने त्यो कलमलाई\nनव जिवनको शुभकामना छ है।", "ne": true}, {"s": "sukshma-spandan", "t": "सुक्ष्म स्पन्दन", "k": "Love", "b": "नबढ्छ ढुक्ढुकी नरोकिन्छ कहिँ\nशिशिर उहि बसन्त त्यहीँ\nगुलाबको पत्र झै\nसयौ सुन्दर पानामा सजिएकी तिमी\nम उहि तिमी त्यही\nकापेका हात र रुझेका आँखाले\nकलम म बन्द गर्छु यही ।।", "ne": true}, {"s": "euta-enako-duita-pratibimba", "t": "एउटा एनाको दुईटा प्रतिबिम्ब", "k": "Reflection", "b": "म दैडिरहेको छु दुइटा सोचमा\nम भौतारिएको छु अन्योलताको विचमा\nनशा नशा नशा देऊ मलाई\nखुल्ला पन्छी झै उड्न देऊ मलाई\nन त रोग छ मसँग\nन त कुनै बोझ छ\nरहस्य त तिमी\nदुर्वल त तिमी छौ तर\nम कुन माटोबाट बनिएको हु\nनशा नशा नशा देऊ मलाई\nयो जिवनको अर्थ देऊ मलाई\nम किन छु कहाँबाट हु\nबताऊ मलाई\nम मर्दैछु यसैले अव\nकोही आइ बचाउ मलाई", "ne": true}];
 var THOUGHTS_DEF = [{"text": "My soul asked me, \"Who are you?\" and I replied, \"I am Isaac.\" My soul laughed, and I realized I am a shadow. I laughed too, because I am not Isaac — I am Ishak.", "label": "Self-realization"}, {"text": "In this cursed world, everyone is a puppet. No matter how much you try to escape, you lose every time. You can't find the mastermind, but I see something of that mastermind, and it looks like desire.", "label": "Untitled"}];
